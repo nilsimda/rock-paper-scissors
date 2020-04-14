@@ -1,0 +1,2 @@
+This is a Task of TheOdinProject, which can be found under: https://www.theodinproject.com/courses/web-development-101/lessons/rock-paper-scissors?ref=lnav 
+The goal is to create a browser Version of the game Rock-Paper-Siccor using JavaScript.
