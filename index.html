@@ -1,0 +1,138 @@
+<html>
+    <header>
+        <style>
+            body{
+                text-align: center;
+            }
+            button{
+                height: 50px;
+                width: 100px;
+                margin: 10px 10px;
+                border-radius: 10px;
+                border: 1px solid black;
+            }
+            .container {
+                margin-top: 200px;
+            }
+            button:hover{
+                transform: scale(1.2);
+                /*box-shadow:20px 20px 8px #f2f2f2;*/
+            }
+            button:focus{
+                outline: 0;
+            }
+        </style>
+    </header>
+    <body>
+        <div class = "container">
+        <div class="Options">
+        <h2>Make your choice:</h2>
+        <button id="Rock">Rock</button>
+        <button id="Paper">Paper</button>
+        <button id="Scissors">Scissors</button>
+        </div><br>
+        <div class='scoreboard'>
+            <p id = 'ChoiceComp'></p>
+            <p id = 'ChoiceUser'></p>
+            <h3>Score</h3>
+            <p id="currScore"></p>
+        </div>
+        </div>
+
+<script>
+    let userScore = 0;
+    let compScore = 0;
+    let buttons = document.querySelectorAll('button');
+    game();
+
+    function game(){
+    buttons.forEach(button => button.addEventListener('click', displayRound)); 
+    }
+
+    function displayRound(e){
+            let compChoice = computerPlay();
+
+            let signComp = document.querySelector('#ChoiceComp');
+            let signUser = document.querySelector('#ChoiceUser');
+
+            signUser.textContent = 'You chose: ' + e.target.id;
+            signComp.textContent = 'The computer chose: ' + compChoice;
+            
+            console.log(playRound(e.target.id, compChoice));
+            const score = document.querySelector('#currScore');
+
+            if(userScore === 5 || compScore === 5){
+                buttons.forEach(button => button.removeEventListener('click', displayRound));
+                let h3 = document.querySelector('h3');
+                h3.textContent = 'Final Score';
+                if(userScore > compScore){
+                    score.textContent = 'Computer: ' + compScore + ' You: ' + userScore + ' YOU WIN!';
+                }
+                else{
+                    score.textContent = 'Computer: ' + compScore + ' You: ' + userScore + ' COMPUTER WINS!';
+                }
+                return;
+            }
+            score.textContent = 'Computer: ' + compScore + ' You: ' + userScore;
+        }
+
+    function computerPlay(){
+        let rand = Math.random();
+        if(rand <= 1/3){
+            return "Rock";
+        }
+        else if(rand <= 2/3){
+            return "Paper";
+        }
+        else {
+            return "Scissors";
+        }
+    }
+    function playRound(playerSelection, computerSelection){
+        if(playerSelection.match(/rock/i)){
+            if(computerSelection == "Rock"){
+                return "Draw!";
+            }
+            else if(computerSelection == "Paper"){
+                compScore++;
+                return "You lose! Paper beats Rock.";
+            }
+            else if(computerSelection == "Scissors"){
+                userScore++;
+                return "You win! Rock beats Scissors.";
+            }
+        }
+        else if(playerSelection.match(/paper/i)){
+            if(computerSelection == "Paper"){
+                return "Draw!";
+            }
+            else if(computerSelection == "Rock"){
+                userScore++;
+                return "You win! Paper beats Rock.";
+            }
+            else if(computerSelection == "Scissors"){
+                compScore++;
+                return "You lose! Scissors beat Paper.";
+            }
+        }
+        else if(playerSelection.match(/scissors/i)){
+            if(computerSelection == "Scissors"){
+                return "Draw!";
+            }
+            else if(computerSelection == "Paper"){
+                userScore++;
+                return "You win! Scissors beat Paper.";
+            }
+            else if(computerSelection == "Rock"){
+                compScore++;
+                return "You lose! Rock beats Scissors.";
+            }
+        }
+        else{
+            return "The Input was invalid.";
+        }
+    }
+
+</script>
+</body>
+</html>
